@@ -1,0 +1,13 @@
+#!/bin/bash 
+# Script to post-process output data
+
+# ---------------
+# POST-PROCESSING
+# ---------------
+
+# extract function value from the simulation output
+for i in {1 ... 10}
+do
+	tail -n --lines=2 workdir.$i/results.out >! results.tmp
+	mv results.tmp workdir.$i/f.$i.out
+done
