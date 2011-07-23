@@ -1,0 +1,9 @@
+README file for HOSC-data repository.
+Directory matlab-code contains the m files for simulating flapping membrane wing kinematics and topology using input file, such as x.in that includes topological and kinematic design variables. 
+For example, to run a specific case from MATLAB, try
+> flapping_fun('x_test', '0', '4')
+where the second argument is flag whether to plot the output, and 4 is the number of terms used in the Fourier series that goes from N=-4 to N=4 for plunging, flapping, and pitching motion. 
+
+The directories run* are the data obtained running the optimization code (without kinematics) on HOSC for initial generation of 20 individuals. DAKOTA input files, output and a compiled MATLAB function are in each directory. 
+
+jega_method.txt describes in details each of the options to DAKOTA moga method.
