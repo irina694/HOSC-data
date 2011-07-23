@@ -1,0 +1,660 @@
+------------------------------------------
+Setting up environment variables
+---
+LD_LIBRARY_PATH is .:/mnt/home/train14/MATLAB/MATLAB_Compiler_runtime/v715/runtime/glnxa64:/mnt/home/train14/MATLAB/MATLAB_Compiler_runtime/v715/bin/glnxa64:/mnt/home/train14/MATLAB/MATLAB_Compiler_runtime/v715/sys/os/glnxa64:/mnt/home/train14/MATLAB/MATLAB_Compiler_runtime/v715/sys/java/jre/glnxa64/jre/lib/amd64/native_threads:/mnt/home/train14/MATLAB/MATLAB_Compiler_runtime/v715/sys/java/jre/glnxa64/jre/lib/amd64/server:/mnt/home/train14/MATLAB/MATLAB_Compiler_runtime/v715/sys/java/jre/glnxa64/jre/lib/amd64/client:/mnt/home/train14/MATLAB/MATLAB_Compiler_runtime/v715/sys/java/jre/glnxa64/jre/lib/amd64
+Warning: No display specified.  You will not be able to display graphics on the screen.
+
+ans = 
+
+    Gvars: 'input'
+
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In meshfaces at 93
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/quadtree at 54
+  In meshfaces at 137
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/quadtree at 132
+  In meshfaces at 137
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/quadtree at 281
+  In meshfaces at 137
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/quadtree at 322
+  In meshfaces at 137
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/quadtree at 371
+  In meshfaces at 137
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In meshfaces>boundarynodes at 202
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In meshfaces>boundarynodes at 208
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In meshfaces>boundarynodes at 229
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In meshfaces>boundarynodes at 208
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In meshfaces>boundarynodes at 229
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In meshfaces>boundarynodes at 208
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In meshfaces>boundarynodes at 229
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In meshfaces>boundarynodes at 208
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In meshfaces>boundarynodes at 229
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In meshfaces>boundarynodes at 208
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In meshfaces>boundarynodes at 270
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In meshfaces>boundarynodes at 272
+  In meshfaces at 141
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly>initmesh at 254
+  In mesh2d/private/meshpoly at 69
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 72
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly>initmesh at 254
+  In mesh2d/private/meshpoly at 69
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 72
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 97
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In mesh2d/private/meshpoly at 136
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In mesh2d/private/mytsearch at 68
+  In mesh2d/private/meshpoly at 139
+  In meshfaces at 148
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: This functionality is no longer supported under the -nodisplay and
+-noFigureWindows startup options. For more information, see "Changes to
+-nodisplay and -noFigureWindows Startup Options" in the MATLAB Release Notes.
+To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/br5ktrh-1.html#br5ktrh-3',
+'-browser')} 
+> In uitools/private/warnfiguredialog at 19
+  In waitbar at 39
+  In meshfaces at 156
+  In wing_geom2 at 204
+  In flapping_fun at 150
+{Warning: TSEARCH will be removed in a future release. Use
+DelaunayTri/pointLocation instead.} 
+> In tsearch at 20
+  In disp_interp at 6
+  In flapping_fun at 303
+   -0.1545    0.2774   -0.2268
+

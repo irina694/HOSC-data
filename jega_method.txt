@@ -1,0 +1,70 @@
+JEGA method: multi-objective genetic algorithm (MOGA) performs Pareto optimization.
+
+independent controls:
+- max_iterations : integer limit for the maximum number of generations (100 by default)
+- max_function_evaluations : integer limit of function evaluations after which the algorithm will stop unless some other specific convergence criteria are set (1000 by default).
+
+dependent controls:
+- seed : starting seed for the random number generator
+
+- print_each_pop : population at each generation is printed to a file "population<GEN#>.dat"
+
+- initialization_type :
+        simple_random - initial solution with random variable values according to a uniform random number distribution
+        unique_random
+        flat_file - read initial population from a file
+
+- population_size : the number of designs for the initial population
+
+- crossover_type :
+        multi_point_binary - performs a bit switching at N crossover points in the binary encoded genome of two designs 
+	multi_point_parameterized_binary - performs a bit swiching at N
+crossover points on each design individually
+        multi_point_real - performs a variable switching at N crossover points
+in the real valued genome of two designs
+        shuffle_random - performs crossover by choosing design variables at
+random from a specified number of parents enough times that the requested
+number of children are produced
+
+- crossover_rate : the number of crossover operations that take place, the
+  number of crossovers = crossover_rate * population_size
+
+- mutation_type :
+        replace_uniform - introduced random variation
+                 number of mutations = mutation_rate * population_size
+        bit_random - introduces random variation in a randomly chosen variable
+                 number of mutations = mutation_rate * number design variables * population_size
+        offset_normal - introduces random variation by adding a Gaussian
+                 random amount, which has a standard deviation dependent on the mutation_scale
+- mutation_scale : fraction in the range [0,1], multiplied by the range of the
+  variable when the variable is being mutated
+        offset_cauchy - adds a Cauchy random variable to the variable being
+mutated
+        offset_uniform - adds a uniform random amount to the variable value
+- mutation_rate
+- mutation_scale : fraction in the range [0,1], multiplied by the range of the variable when the variable is being mutated
+        range of deviation = +/- 1/2 * (mutation_scate * variable range)
+- replacement_type :
+        below_limit : attempts to keep all designs for which the negated
+fitness is below a certain limit (higher fitness is better)
+        elitist : chooses the required number of designs choosing the most fit
+- shrinkage_percentage : prevents extreme decreases in the population size
+- fitness_type :
+        domination_count - orders population members by the negative of the
+number of designs that dominate them
+	layer_rank - assigns a layer of 0 all non-dominated designs, then from what remains, assigning all the non-dominated a layer of 1, etc. until all designs have been assigned a layer
+        layer_rank - assigns a layer of 0 all non-demonited designs, then from what remains, assigning all the non-dominated a layer of 1, etc. until all designs have been assigned a layer
+
+- convergence_type:
+	metric-tracker - tracks various changes in non-dominated frontier from generation to generation. The algorithm stops when changes over a specified number of generations fall below threshold
+
+~
+                                                                          
+~                                                                          
+~                                                                          
+~                                                                          
+~                                                                          
+~                                                                          
+~                                                                          
+"jega_method.txt" 51L, 2922C written                     51,181-188    Bot
+

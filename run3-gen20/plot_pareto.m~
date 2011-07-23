@@ -1,0 +1,9 @@
+% plot Pareto front for three objective functions (drag, power and lift)
+% input file contains a 3x1 vector of doubles
+
+function [] = plot_pareto(file_name)
+
+f = load(file_name);
+
+
+end

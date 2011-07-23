@@ -1,0 +1,15 @@
+#!/bin/bash
+# 2 hour submission
+#PBS -l walltime=02:00:00
+# selecting 4 nodes = 4 * 4 = 16 processors for use, mpiprocs needs to equal ncpus and doesn't exceed 4
+#PBS -l select=4:mpiprocs=4:ncpus=4
+# scatter required
+#PBS -l place=scatter
+# account required
+#PBS -A 01TRAN002
+
+cd $PBS_O_WORKDIR
+echo "RUNNING ON: `/usr/bin/uniq $PBS_NODEFILE`"
+export PATH=$PATH:/mnt/home/train14/Dakota/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/home/train14/Dakota/bin
+mpirun_jaws -np 16 dakota -i dakota_wing.in > $WORKDIR/run3-gen20/log

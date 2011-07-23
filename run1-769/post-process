@@ -1,0 +1,12 @@
+#!/bin/csh 
+# Script to post-process output data
+
+# ---------------
+# POST-PROCESSING
+# ---------------
+
+# extract function value from the simulation output
+while ($i <= 768)
+	tail -1 workdir.$i/results.out >! results.tmp
+	
+done

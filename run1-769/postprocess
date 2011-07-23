@@ -1,0 +1,19 @@
+#!/bin/csh -f 
+# extract function values from workdirs and write to one file
+
+@ i = 1
+while ($i <= 768)
+	cd workdir.$i
+	tail -2 results.out >! results.tmp
+	mv results.tmp results.out
+	@ i++
+	cd ..
+end
+
+@ i = 1
+while ($i <= 768)
+	cd workdir.$i
+	head -1 results.out >> ../f.out
+	cd ..
+	@ i++
+end

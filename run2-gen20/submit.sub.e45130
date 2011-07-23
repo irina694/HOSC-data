@@ -1,0 +1,53 @@
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+
+rec_cp: "workdir.1/wing.template" already exists.
+Error in rec_cp("templatedir", "workdir.1").
+=>> PBS: job killed: walltime 1286 exceeded limit 1200
+mpirun: killing job...
+
+--------------------------------------------------------------------------
+mpirun noticed that process rank 5 with PID 32195 on node r05n22 exited on signal 0 (Unknown signal 0).
+--------------------------------------------------------------------------
+mpirun: clean termination accomplished
+
