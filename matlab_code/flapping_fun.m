@@ -7,7 +7,7 @@
 % @plot_decide_string either 0 (no plots) or 1 
 % @N number of terms used in Fourier series approximation of kinematics 
 %   of plunging, flapping, and pitching motion, each of the form:
-%   a_0 + sum from n=-N to n=N of a_n*exp(i*omega*n*t)
+%   a_0 + sum from n=-N to n=N of a_n*exp(sqrt(-1)*omega*n*t)
 % @return vector g (drag, power, and lift coefficients)
 
 function[g] = flapping_fun(x_filename, plot_decide_string, N)
@@ -19,10 +19,14 @@ N = str2num(N);
 N_kin_vars = N*6+6; 
 x_end = length(x) - N_kin_vars;
 
-struct Gvars input 
+struct Gvars input; 
 smallN = 1e-6;
 
 [Gvars input] = setupVars;
+
+% disable tsearch depreciation warning
+msgid_tsearch = 'MATLAB:tsearch:DeprecatedFunction';
+warning('off', msgid_tsearch);
 
 g_fail = [1,1,1];  % return these values for the objective functions if something fails
 N_elements_fail = 6000;  % if the grid has more than this # of elements, don't bother to evaluate design, g = g_fail
@@ -142,23 +146,23 @@ if connectivity.error == 0
     %% Kinematic motions:
     
     % find Fourier series coefficients 
-    A = x(1, x_end+1:length(x))
+    A = x(1, x_end+1:length(x));
     
     % the plunging motion
     % n = -N, -N+1, ..., -1, 0, 1, ..., N-1, N
-    % and nth term in the series is a_n*exp(i*omega*n*t)
+    % and nth term in the series is a_n*exp(sqrt(-1)*omega*n*t)
     a_0 = A(1,1);
     a = A(1, 2:2*N+2);
     N_vector = [-N:N];
     
     % calculate the coefficients for the plunging motion
-    exponent = i*kin.omega*N_vector;
+    exponent = sqrt(-1)*kin.omega*N_vector;
     expMatrix = exp(time.t*exponent);
     z = expMatrix*a';
     kin.z = real(a_0 + z);
 
     % calculate the coefficients for the derivative
-    coeff_zp = i*kin.omega*N_vector.*a;
+    coeff_zp = sqrt(-1)*kin.omega*N_vector.*a;
     kin.zp = real(expMatrix*coeff_zp');
 
     % calculate the coefficients for the second derivative
@@ -175,7 +179,7 @@ if connectivity.error == 0
     kin.f = real(b_0 + f_motion);
 
     % calculate the coefficients for the derivative
-    coeff_fp = i*kin.omega*N_vector.*b;
+    coeff_fp = sqrt(-1)*kin.omega*N_vector.*b;
     kin.fp = real(expMatrix*coeff_fp');
 
     % calculate the coefficients for the second derivative
@@ -191,7 +195,7 @@ if connectivity.error == 0
     kin.th = real(c_0 + th);
 
     % calculate the coefficients for the derivative
-    coeff_thp = i*kin.omega*N_vector.*c;
+    coeff_thp = sqrt(-1)*kin.omega*N_vector.*c;
     kin.thp = real(expMatrix*coeff_thp');
 
     % calculate the coefficients for the second derivative
@@ -260,13 +264,13 @@ if connectivity.error == 0
         aero.K = zeros(aero.N_h+1,aero.N_h+1);
         if mod(aero.N_h,2) == 0
             aero.K(1,[2:2:aero.N_h+1]) = [1:2:aero.N_h];
-            for j = 1:aero.N_h/2
-                aero.K = aero.K + diag([0,j*4:2:aero.N_h*2],(j-1)*2+1);
+            for i = 1:aero.N_h/2
+                aero.K = aero.K + diag([0,i*4:2:aero.N_h*2],(i-1)*2+1);
             end
         else
             aero.K(1,[2:2:aero.N_h+1]) = [1:2:aero.N_h+1];
-            for j = 1:aero.N_h/2
-                aero.K = aero.K + diag([0,j*4:2:aero.N_h*2],(j-1)*2+1);
+            for i = 1:aero.N_h/2
+                aero.K = aero.K + diag([0,i*4:2:aero.N_h*2],(i-1)*2+1);
             end
         end
         aero.K = kron(diag(1./gauss.b),aero.K);
@@ -295,11 +299,11 @@ if connectivity.error == 0
         FEA.GlobalDOF = FEA.N_nodes*6;
         FEA.DOF = reshape(1:FEA.GlobalDOF,6,FEA.N_nodes)';
         
-        for j = 1:length(FEA.trielements)
-            FEA.membrane_asmb(j,:) = [FEA.DOF(FEA.trielements(j,1),:),FEA.DOF(FEA.trielements(j,2),:),FEA.DOF(FEA.trielements(j,3),:)];
+        for i = 1:length(FEA.trielements)
+            FEA.membrane_asmb(i,:) = [FEA.DOF(FEA.trielements(i,1),:),FEA.DOF(FEA.trielements(i,2),:),FEA.DOF(FEA.trielements(i,3),:)];
         end
-        for j = 1:length(FEA.beam_elements)
-            FEA.beam_asmb(j,:) = [FEA.DOF(FEA.beam_elements(j,1),:),FEA.DOF(FEA.beam_elements(j,2),:)];
+        for i = 1:length(FEA.beam_elements)
+            FEA.beam_asmb(i,:) = [FEA.DOF(FEA.beam_elements(i,1),:),FEA.DOF(FEA.beam_elements(i,2),:)];
         end
         
         %% FEA boundary conditions
@@ -407,35 +411,35 @@ if connectivity.error == 0
             set(gcf,'position',[98 160 1324 938])
         end
         
-        for j = 1:length(time.t)
+        for i = 1:length(time.t)
             
             %% Transformation matrix:
             
-            kin.T = [cos(kin.th(j)),0,sin(kin.th(j));0,1,0;-sin(kin.th(j)),0,cos(kin.th(j))]*[1,0,0;0,cos(kin.f(j)),-sin(kin.f(j));0,sin(kin.f(j)),cos(kin.f(j))];
+            kin.T = [cos(kin.th(i)),0,sin(kin.th(i));0,1,0;-sin(kin.th(i)),0,cos(kin.th(i))]*[1,0,0;0,cos(kin.f(i)),-sin(kin.f(i));0,sin(kin.f(i)),cos(kin.f(i))];
             
             %% Compute aeroelastic matrices:
             
-            aero.uo_mult = kron(diag(aero.uo(j,:)),speye(aero.N_h+1));
-            aero.uo_dot_mult = kron(diag(aero.uo_dot(j,:)),speye(aero.N_h+1));
+            aero.uo_mult = kron(diag(aero.uo(i,:)),speye(aero.N_h+1));
+            aero.uo_dot_mult = kron(diag(aero.uo_dot(i,:)),speye(aero.N_h+1));
             
-            inflow.B = kron(diag(aero.uo(j,:)./gauss.b),speye(inflow.N));
-            inflow.R = inflow.Rw*(aero.vn_dot(:,j)+aero.uo_dot_mult*interp.K_T_zo);
+            inflow.B = kron(diag(aero.uo(i,:)./gauss.b),speye(inflow.N));
+            inflow.R = inflow.Rw*(aero.vn_dot(:,i)+aero.uo_dot_mult*interp.K_T_zo);
             inflow.Ru = inflow.Rw*aero.uo_dot_mult*interp.K_T_u;
             inflow.Rup = inflow.Rw*aero.uo_mult*interp.K_T_u;
             FEA.K_eff = FEA.Kr - interp.F_map*(aero.uo_mult*aero.uo_mult*interp.K_T_u + aero.uo_dot_mult*interp.W_K_T_u);
             FEA.C_eff = FEA.Cr - interp.F_map*aero.uo_mult*(interp.T_u + interp.W_K_T_u);
-            FEA.F_aero = interp.F_map*(aero.uo_mult*aero.vn(:,j) + aero.W*aero.vn_dot(:,j) + aero.uo_mult*aero.uo_mult*interp.K_T_zo + aero.uo_dot_mult*interp.W_K_T_zo);
+            FEA.F_aero = interp.F_map*(aero.uo_mult*aero.vn(:,i) + aero.W*aero.vn_dot(:,i) + aero.uo_mult*aero.uo_mult*interp.K_T_zo + aero.uo_dot_mult*interp.W_K_T_zo);
             FEA.F_lambda = -interp.F_map*aero.uo_mult*inflow.Q;
             
             %% Assemble:
             
             solve.A = [inflow.A,zeros(inflow.N*gauss.N_stations,FEA.N_modes),-inflow.Rupp;zeros(FEA.N_modes,inflow.N*gauss.N_stations),eye(FEA.N_modes),zeros(FEA.N_modes);zeros(FEA.N_modes,inflow.N*gauss.N_stations),zeros(FEA.N_modes),FEA.M_eff];
             solve.B = [inflow.B,-inflow.Ru,-inflow.Rup;zeros(FEA.N_modes,inflow.N*gauss.N_stations),zeros(FEA.N_modes),-eye(FEA.N_modes);-FEA.F_lambda,FEA.K_eff,FEA.C_eff];
-            solve.R = [inflow.R;zeros(FEA.N_modes,1);FEA.F_iner(:,j)+FEA.F_aero];
+            solve.R = [inflow.R;zeros(FEA.N_modes,1);FEA.F_iner(:,i)+FEA.F_aero];
             
             %% Integrate:
             
-            if j == 1
+            if i == 1
                 solve.Xp = solve.A\(solve.R-solve.B*solve.X);
                 solve.G = ((1/solve.beta/time.t_step)*solve.A + solve.alpha*solve.B)*solve.X + (1/solve.beta-1)*solve.A*solve.Xp - solve.alpha*solve.R;
             else
@@ -458,17 +462,17 @@ if connectivity.error == 0
             FEA.eta_p = solve.X(inflow.N*gauss.N_stations+FEA.N_modes+1:end);
             FEA.eta_pp = solve.Xp(inflow.N*gauss.N_stations+FEA.N_modes+1:end);
             FEA.answer = zeros(FEA.GlobalDOF,1); FEA.answer(FEA.fdof) = interp.modes*FEA.eta; FEA.answer = reshape(FEA.answer,6,FEA.N_nodes)';
-            FEA.mode_history(j,:) = FEA.eta(1:5)';
+            FEA.mode_history(i,:) = FEA.eta(1:5)';
             
             %% Airloads:
             
             aero.hn = interp.T_zo + interp.T_u*FEA.eta;
             aero.hn_dot = interp.T_u*FEA.eta_p;
             aero.hn_dot_dot = interp.T_u*FEA.eta_pp;
-            aero.wn = aero.vn(:,j) + aero.hn_dot + aero.uo_mult*aero.K*aero.hn;
-            aero.wn2 = aero.vn(:,j) + aero.hn_dot; aero.wn2(1:(aero.N_h+1):size(aero.vn,1)) = aero.wn2(1:(aero.N_h+1):size(aero.vn,1)) - .5*setup.U(j)*(sin(kin.f(j)+kin.th(j))-sin(kin.f(j)-kin.th(j)));
+            aero.wn = aero.vn(:,i) + aero.hn_dot + aero.uo_mult*aero.K*aero.hn;
+            aero.wn2 = aero.vn(:,i) + aero.hn_dot; aero.wn2(1:(aero.N_h+1):size(aero.vn,1)) = aero.wn2(1:(aero.N_h+1):size(aero.vn,1)) - .5*setup.U(i)*(sin(kin.f(i)+kin.th(i))-sin(kin.f(i)-kin.th(i)));
             
-            aero.taun = aero.uo_mult*(aero.vn(:,j)-aero.lambda) + aero.W*aero.vn_dot(:,j) + ...
+            aero.taun = aero.uo_mult*(aero.vn(:,i)-aero.lambda) + aero.W*aero.vn_dot(:,i) + ...
                 (aero.uo_mult*aero.uo_mult)*(interp.K_T_zo + interp.K_T_u*FEA.eta) + aero.uo_dot_mult*(interp.W_K_T_zo + interp.W_K_T_u*FEA.eta) + ...
                 aero.uo_mult*(interp.T_u + interp.W_K_T_u)*FEA.eta_p + aero.W*aero.hn_dot_dot;
             aero.dP = interp.P_map2*aero.taun;
@@ -478,32 +482,32 @@ if connectivity.error == 0
             %% Final forces:
             
             loads.alpha = reshape(-interp.h_map*aero.hn,gauss.N_gauss,gauss.N_stations);
-            loads.alpha = atan2(loads.alpha(end,:)-loads.alpha(1,:),2*gauss.b) + atan2(aero.vo(j,:),aero.uo(j,:));
+            loads.alpha = atan2(loads.alpha(end,:)-loads.alpha(1,:),2*gauss.b) + atan2(aero.vo(i,:),aero.uo(i,:));
             loads.fz = gauss.b.*sum(repmat(gauss.weight,1,gauss.N_stations).*gauss.dP.*repmat(sin(gauss.theta),1,gauss.N_stations)) + ...
-                setup.rho*setup.U(j)*setup.U(j)*loads.correct_station.*gauss.b.*(loads.cd_o*cos(loads.alpha).^2+loads.cd_pi2*sin(loads.alpha).^2).*aero.vo(j,:)./(sqrt(aero.vo(j,:).^2+aero.uo(j,:).^2));
+                setup.rho*setup.U(i)*setup.U(i)*loads.correct_station.*gauss.b.*(loads.cd_o*cos(loads.alpha).^2+loads.cd_pi2*sin(loads.alpha).^2).*aero.vo(i,:)./(sqrt(aero.vo(i,:).^2+aero.uo(i,:).^2));
             loads.fx = gauss.b.*sum(repmat(gauss.weight,1,gauss.N_stations).*gauss.dP.*gauss.hx.*repmat(sin(gauss.theta),1,gauss.N_stations)) + ...
                 -2*pi*setup.rho*loads.correct_station.*gauss.b.*(aero.wn(1:aero.N_h+1:end)'-aero.lambda_o).^2 + ...
-                setup.rho*setup.U(j)*setup.U(j)*loads.correct_station.*gauss.b.*(loads.cd_o*cos(loads.alpha).^2+loads.cd_pi2*sin(loads.alpha).^2).*aero.uo(j,:)./(sqrt(aero.vo(j,:).^2+aero.uo(j,:).^2));
+                setup.rho*setup.U(i)*setup.U(i)*loads.correct_station.*gauss.b.*(loads.cd_o*cos(loads.alpha).^2+loads.cd_pi2*sin(loads.alpha).^2).*aero.uo(i,:)./(sqrt(aero.vo(i,:).^2+aero.uo(i,:).^2));
             loads.temp = kin.T*[loads.fx;zeros(1,gauss.N_stations);loads.fz];
             loads.Fx = loads.temp(1,:); loads.Fy = loads.temp(2,:); loads.Fz = loads.temp(3,:);
             
-            loads.cl = loads.Fz./gauss.b/setup.rho/setup.U(j)/setup.U(j);
-            loads.cd = loads.Fx./gauss.b/setup.rho/setup.U(j)/setup.U(j);
-            loads.CL(j,1) = (wing.length/gauss.N_stations)*sum(loads.cl)/wing.length;
-            loads.CD(j,1) = (wing.length/gauss.N_stations)*sum(loads.cd)/wing.length;
+            loads.cl = loads.Fz./gauss.b/setup.rho/setup.U(i)/setup.U(i);
+            loads.cd = loads.Fx./gauss.b/setup.rho/setup.U(i)/setup.U(i);
+            loads.CL(i,1) = (wing.length/gauss.N_stations)*sum(loads.cl)/wing.length;
+            loads.CD(i,1) = (wing.length/gauss.N_stations)*sum(loads.cd)/wing.length;
             
             %% Power:
             
-            loads.cp_aero = sum(repmat(gauss.weight,1,gauss.N_stations).*reshape(interp.h_map*aero.wn2,gauss.N_gauss,gauss.N_stations).*gauss.dP.*repmat(sin(gauss.theta),1,gauss.N_stations))/setup.rho/setup.U(j)/setup.U(j)/setup.U(j);
-            loads.CP_aero(j,1) = (wing.length/gauss.N_stations)*sum(loads.cp_aero)/wing.length;
-            loads.CP_KER(j,1) = (FEA.eta_p'*(FEA.Mr*FEA.eta_pp + FEA.Cr*FEA.eta_p))/(sum(2*gauss.b*wing.length/gauss.N_stations)*.5*setup.rho*setup.U(j)^3);
-            loads.CP_SER(j,1) = (FEA.eta_p'*FEA.Kr*FEA.eta)/(sum(2*gauss.b*wing.length/gauss.N_stations)*.5*setup.rho*setup.U(j)^3);
-            loads.CP_total(j,1) = loads.CP_inertial(j,1) + loads.CP_KER(j,1) + loads.CP_SER(j,1) + loads.CP_aero(j,1);
+            loads.cp_aero = sum(repmat(gauss.weight,1,gauss.N_stations).*reshape(interp.h_map*aero.wn2,gauss.N_gauss,gauss.N_stations).*gauss.dP.*repmat(sin(gauss.theta),1,gauss.N_stations))/setup.rho/setup.U(i)/setup.U(i)/setup.U(i);
+            loads.CP_aero(i,1) = (wing.length/gauss.N_stations)*sum(loads.cp_aero)/wing.length;
+            loads.CP_KER(i,1) = (FEA.eta_p'*(FEA.Mr*FEA.eta_pp + FEA.Cr*FEA.eta_p))/(sum(2*gauss.b*wing.length/gauss.N_stations)*.5*setup.rho*setup.U(i)^3);
+            loads.CP_SER(i,1) = (FEA.eta_p'*FEA.Kr*FEA.eta)/(sum(2*gauss.b*wing.length/gauss.N_stations)*.5*setup.rho*setup.U(i)^3);
+            loads.CP_total(i,1) = loads.CP_inertial(i,1) + loads.CP_KER(i,1) + loads.CP_SER(i,1) + loads.CP_aero(i,1);
             
             %% Plotting:
             
             if plot_decide
-                if mod(j,time.skip) == 0 || j == 1 || j == length(time.t)
+                if mod(i,time.skip) == 0 || i == 1 || i == length(time.t)
                     
                     subplot(2,3,1),plot3(wing.LE_knots,wing.y_stations,wing.y_stations*0,'b.',wing.TE_knots,wing.y_stations,wing.y_stations*0,'b.','markersize',15)
                     hold on
@@ -517,11 +521,11 @@ if connectivity.error == 0
                     view([30 34])
                     
                     
-                    for l=1:connectivity.edges.Nedges
-                        if connectivity.edges.type(l) == 'I'
-                            subplot(4,3,2),plot([connectivity.vertices.coords(connectivity.edges.vertices(l,1),1),connectivity.vertices.coords(connectivity.edges.vertices(l,2),1)],[connectivity.vertices.coords(connectivity.edges.vertices(l,1),2),connectivity.vertices.coords(connectivity.edges.vertices(l,2),2)],'r-','MarkerEdgeColor','k','LineWidth',.5); hold on;
+                    for j=1:connectivity.edges.Nedges
+                        if connectivity.edges.type(j) == 'I'
+                            subplot(4,3,2),plot([connectivity.vertices.coords(connectivity.edges.vertices(j,1),1),connectivity.vertices.coords(connectivity.edges.vertices(j,2),1)],[connectivity.vertices.coords(connectivity.edges.vertices(j,1),2),connectivity.vertices.coords(connectivity.edges.vertices(j,2),2)],'r-','MarkerEdgeColor','k','LineWidth',.5); hold on;
                         else
-                            subplot(4,3,2),plot([connectivity.vertices.coords(connectivity.edges.vertices(l,1),1),connectivity.vertices.coords(connectivity.edges.vertices(l,2),1)],[connectivity.vertices.coords(connectivity.edges.vertices(l,1),2),connectivity.vertices.coords(connectivity.edges.vertices(l,2),2)],'k-','MarkerEdgeColor','k','LineWidth',2); hold on;
+                            subplot(4,3,2),plot([connectivity.vertices.coords(connectivity.edges.vertices(j,1),1),connectivity.vertices.coords(connectivity.edges.vertices(j,2),1)],[connectivity.vertices.coords(connectivity.edges.vertices(j,1),2),connectivity.vertices.coords(connectivity.edges.vertices(j,2),2)],'k-','MarkerEdgeColor','k','LineWidth',2); hold on;
                         end
                     end
                     axis equal; axis([-1.01 1.01 -1.01 1.01]); axis off
@@ -529,13 +533,13 @@ if connectivity.error == 0
                     
                     subplot(4,3,5),trisurf(FEA.trielements,FEA.x,FEA.y,FEA.z,'facecolor','none','edgecolor','k')
                     hold on
-                    for l = 1:length(FEA.beam_elements)
-                        if FEA.beam_ID(l,:) == 'W' || FEA.beam_ID(l,:) == 'N' || FEA.beam_ID(l,:) == 'E'
-                            plot3([FEA.x(FEA.beam_elements(l,1)),FEA.x(FEA.beam_elements(l,2))],[FEA.y(FEA.beam_elements(l,1)),FEA.y(FEA.beam_elements(l,2))],[FEA.z(FEA.beam_elements(l,1)),FEA.z(FEA.beam_elements(l,2))],'k-','linewidth',2)
-                        elseif FEA.beam_ID(l,:) == 'S'
-                            plot3([FEA.x(FEA.beam_elements(l,1)),FEA.x(FEA.beam_elements(l,2))],[FEA.y(FEA.beam_elements(l,1)),FEA.y(FEA.beam_elements(l,2))],[FEA.z(FEA.beam_elements(l,1)),FEA.z(FEA.beam_elements(l,2))],'b-','linewidth',2)
+                    for j = 1:length(FEA.beam_elements)
+                        if FEA.beam_ID(j,:) == 'W' || FEA.beam_ID(j,:) == 'N' || FEA.beam_ID(j,:) == 'E'
+                            plot3([FEA.x(FEA.beam_elements(j,1)),FEA.x(FEA.beam_elements(j,2))],[FEA.y(FEA.beam_elements(j,1)),FEA.y(FEA.beam_elements(j,2))],[FEA.z(FEA.beam_elements(j,1)),FEA.z(FEA.beam_elements(j,2))],'k-','linewidth',2)
+                        elseif FEA.beam_ID(j,:) == 'S'
+                            plot3([FEA.x(FEA.beam_elements(j,1)),FEA.x(FEA.beam_elements(j,2))],[FEA.y(FEA.beam_elements(j,1)),FEA.y(FEA.beam_elements(j,2))],[FEA.z(FEA.beam_elements(j,1)),FEA.z(FEA.beam_elements(j,2))],'b-','linewidth',2)
                         else
-                            plot3([FEA.x(FEA.beam_elements(l,1)),FEA.x(FEA.beam_elements(l,2))],[FEA.y(FEA.beam_elements(l,1)),FEA.y(FEA.beam_elements(l,2))],[FEA.z(FEA.beam_elements(l,1)),FEA.z(FEA.beam_elements(l,2))],'r-','linewidth',2)
+                            plot3([FEA.x(FEA.beam_elements(j,1)),FEA.x(FEA.beam_elements(j,2))],[FEA.y(FEA.beam_elements(j,1)),FEA.y(FEA.beam_elements(j,2))],[FEA.z(FEA.beam_elements(j,1)),FEA.z(FEA.beam_elements(j,2))],'r-','linewidth',2)
                         end
                     end
                     axis equal, axis tight
@@ -547,8 +551,8 @@ if connectivity.error == 0
                     subplot(4,3,3),surf(wing.x,wing.y,wing.z,'edgecolor','none','facecolor',[.5 .5 .5],'facealpha',.5)
                     foo = reshape(gauss.x+reshape(repmat(gauss.b,gauss.N_gauss,1),1,gauss.N_gauss*gauss.N_stations)'+reshape(repmat(gauss.LE,gauss.N_gauss,1),1,gauss.N_gauss*gauss.N_stations)',gauss.N_gauss,gauss.N_stations);
                     hold on
-                    for l = 1:gauss.N_stations
-                        plot3(foo(1:end-2,l),repmat(gauss.y(l),gauss.N_gauss-2,1),gauss.dP(1:end-2,l)/(.5*setup.rho*setup.U(j)*setup.U(j))/200,'k-','linewidth',1.5)
+                    for j = 1:gauss.N_stations
+                        plot3(foo(1:end-2,j),repmat(gauss.y(j),gauss.N_gauss-2,1),gauss.dP(1:end-2,j)/(.5*setup.rho*setup.U(j)*setup.U(j))/200,'k-','linewidth',1.5)
                     end
                     clear temp
                     axis equal, axis tight
@@ -587,23 +591,23 @@ if connectivity.error == 0
                     set(gca,'position',[0.4108    0.3291    0.2134    0.1577])
                     
                     
-                    subplot(4,3,9),plot(time.t(1:j)*kin.omega/2/pi,loads.CP_aero(1:j),'r-',...
-                        time.t(1:j)*kin.omega/2/pi,loads.CP_KER(1:j),'b-',...
-                        time.t(1:j)*kin.omega/2/pi,loads.CP_inertial(1:j),'g-',...
-                        time.t(1:j)*kin.omega/2/pi,loads.CP_SER(1:j),'m-')
+                    subplot(4,3,9),plot(time.t(1:i)*kin.omega/2/pi,loads.CP_aero(1:i),'r-',...
+                        time.t(1:i)*kin.omega/2/pi,loads.CP_KER(1:i),'b-',...
+                        time.t(1:i)*kin.omega/2/pi,loads.CP_inertial(1:i),'g-',...
+                        time.t(1:i)*kin.omega/2/pi,loads.CP_SER(1:i),'m-')
                     hold on
-                    plot(time.t(1:j)*kin.omega/2/pi,loads.CP_total(1:j),'k-','linewidth',2)
+                    plot(time.t(1:i)*kin.omega/2/pi,loads.CP_total(1:i),'k-','linewidth',2)
                     xlabel t/T
                     ylabel C_P
                     
                     
-                    subplot(10,10,90),plot(time.t(1:j)*kin.omega/2/pi,loads.CD(1:j),'k-')
+                    subplot(10,10,90),plot(time.t(1:i)*kin.omega/2/pi,loads.CD(1:i),'k-')
                     xlabel t/T
                     ylabel C_D
                     set(gca,'position',[0.4108    0.1100    0.2134    0.1577])
                     
                     
-                    subplot(4,3,12),plot(time.t(1:j)*kin.omega/2/pi,FEA.mode_history(1:j,:))
+                    subplot(4,3,12),plot(time.t(1:i)*kin.omega/2/pi,FEA.mode_history(1:i,:))
                     xlabel t/T
                     ylabel \eta
                     
@@ -639,4 +643,4 @@ else
     
 end
 
-disp(g);
+%disp(g);
