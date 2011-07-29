@@ -8,7 +8,6 @@
 % @D number of Fourier series coefficients used to approximate kinematics 
 %   of plunging, flapping, and pitching motion, each of the form:
 %   a_n*exp(sqrt(-1)*omega*n*t), n = -N ... N
-% @time_skip set the number of plots to skip if plot_decide_string=1
 % @return vector g (drag, power, and lift coefficients)
 
 function[g] = flapping_fun(x_filename, plot_decide_string, D, time_skip)
@@ -409,6 +408,7 @@ if connectivity.error == 0
         FEA.M_eff = FEA.Mr - 2*setup.rho*interp.F_dP*interp.dP_convert*loads.correct_total*interp.P_map*aero.W*interp.T_hn_h*interp.u_convert;
         
         %% Time marching:
+        cur = gcf;
         if plot_decide
             figure
             set(gcf,'position',[98 160 1324 938])
@@ -616,14 +616,15 @@ if connectivity.error == 0
                     
                     
                     pause(0.1)
-                    if i < length(time.t)
+                    if j < length(time.t)
                         clf
                     end
+                   
                 end
             end
             
         end
-        
+        figure(cur)
         %% Efficiency:
         
         loads.eta_total = -mean(loads.CD(length(time.t)-time.N_per:length(time.t)))/mean(loads.CP_total(length(time.t)-time.N_per:length(time.t)));

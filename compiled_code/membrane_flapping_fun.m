@@ -1,35 +1,4 @@
-% flapping_fun
-% @x_filename file that contains vector x, all design variables 
-%   x = [topology variables | kinematic variables | beam thickness], 
-%   where kinematic variables are Forier series coefficients: 
-%   a0, a(-N)_Real, a(-N)Complex, a(-N+1)_Real, a(-N+1)_Complex, ...,
-%   a(N-1)_Real, a(N-1)_Complex, a(N)_Real, a(N)_Complex for plunging, 
-% @plot_decide_string either 0 (no plots) or 1 
-% @D number of Fourier series coefficients used to approximate kinematics 
-%   of plunging, flapping, and pitching motion, each of the form:
-%   a_n*exp(sqrt(-1)*omega*n*t), n = -N ... N
-% @time_skip set the number of plots to skip if plot_decide_string=1
-% @return vector g (drag, power, and lift coefficients)
-
-function[g] = flapping_fun(x_filename, plot_decide_string, D, time_skip)
-
-% load x from filename
-x = load(x_filename, '-ascii');
-plot_decide = str2num(plot_decide_string);
-D = str2num(D); 
-time_skip = str2num(time_skip);
-
-N_kin_vars = D*3; 
-x_end = length(x) - N_kin_vars;
-
-struct Gvars input; 
-smallN = 1e-6;
-
-[Gvars input] = setupVars;
-
-% disable tsearch depreciation warning
-msgid_tsearch = 'MATLAB:tsearch:DeprecatedFunction';
-warning('off', msgid_tsearch);
+function[g] = membrane_flapping_fun(x,plot_decide)
 
 g_fail = [1,1,1];  % return these values for the objective functions if something fails
 N_elements_fail = 6000;  % if the grid has more than this # of elements, don't bother to evaluate design, g = g_fail
@@ -72,7 +41,7 @@ kin.periodic = true; % tells the solver whether or not the same prescribed kinem
 
 time.N_per = 100; % how many time steps per flapping cycle?
 time.N_cycles = 5; % how many flapping cycles (want to time march until initial transients die out)?
-time.skip = time_skip; % only plot output every time.skip time steps
+time.skip = 10; % only plot output every time.skip time steps
 
 time.t_step = 2*pi/kin.omega/time.N_per;
 time.N_steps = time.N_per*time.N_cycles;
@@ -85,8 +54,8 @@ setup.Up = 0*ones(length(time.t),1); % time-derivative of free-stream velocity a
 setup.rho = 1.225; % flow density (kg/m^3)
 
 %% Wing topology
-% create connectivity and pass only the topology variables from x vector
-[connectivity,connectivity.error] = create_cell(x(1, 1:x_end), Gvars, input); 
+
+[connectivity,connectivity.error] = create_cell(x); % create connectivity
 connectivity.gage = .02; % seeding of control points for mesh generation (m)
 
 if connectivity.error == 0
@@ -148,69 +117,17 @@ if connectivity.error == 0
     
     %% Kinematic motions:
     
-    % find Fourier series coefficients 
-    A = x(1, x_end+1:length(x));
+    kin.z = kin.z_m*sin(kin.omega*time.t + kin.z_shift) + kin.z_DC; % kinematic motions at each time step
+    kin.zp = kin.omega*kin.z_m*cos(kin.omega*time.t + kin.z_shift);
+    kin.zpp = -kin.omega*kin.omega*kin.z_m*sin(kin.omega*time.t + kin.z_shift);
     
-    % Fourier coefficients for three motions for D data points each
-    % The nth term in the series is a_n*exp(sqrt(-1)*omega*n*t)
-    % where n = -N, -N+1, ..., -1, 0, 1, ..., N-1, N
+    kin.f = kin.f_m*sin(kin.omega*time.t + kin.f_shift) + kin.f_DC;
+    kin.fp = kin.omega*kin.f_m*cos(kin.omega*time.t + kin.f_shift);
+    kin.fpp = -kin.omega*kin.omega*kin.f_m*sin(kin.omega*time.t + kin.f_shift);
     
-    Cz = A(1, 1:D);   % the plunging motion
-    Cf = A(1, D+1:2*D); % flapping motion
-    Cth = A(1, 2*D+1:3*D); % pitching motion
-    
-    % get D data points
-    if (mod(D, 2) == 0)
-        N = D/2;
-    else
-        N = (D-1)/2;
-    end
-    
-    t_end = time.t(length(time.t),1);
-    Xpoints = [0:t_end/D:t_end*(D-1)/D];
-    k_vector = [-N:N];
-    
-    % calculate the coefficients matrix
-    Q = exp(sqrt(-1)*kin.omega*Xpoints'*k_vector);
-   
-    % first derivatives
-    Cp_z = sqrt(-1)*kin.omega*diag(k_vector)*Cz';
-    Cp_f = sqrt(-1)*kin.omega*diag(k_vector)*Cf';
-    Cp_th = sqrt(-1)*kin.omega*diag(k_vector)*Cth';
-    
-    % second derivatives 
-    Cpp_z = -kin.omega*kin.omega*diag(k_vector.*k_vector)*Cz';
-    Cpp_f = -kin.omega*kin.omega*diag(k_vector.*k_vector)*Cf';
-    Cpp_th = -kin.omega*kin.omega*diag(k_vector.*k_vector)*Cth';
-    
-    % reconstruct the motion functions and their derivatives  
-    kin.z = Q*Cz';
-    kin.zp = Q*Cp_z;
-    kin.zpp = Q*Cpp_z;
-    
-    kin.f = Q*Cf';
-    kin.fp = Q*Cp_f;
-    kin.fpp = Q*Cpp_f;
-    
-    kin.th = Q*Cth';
-    kin.thp = Q*Cp_th;
-    kin.thpp = Q*Cpp_th;
-    
-    % sinusoidal motion
-    
-%      kin.z = kin.z_m*sin(kin.omega*time.t + kin.z_shift) + kin.z_DC; % kinematic motions at each time step
-%      kin.zp = kin.omega*kin.z_m*cos(kin.omega*time.t + kin.z_shift);
-%      kin.zpp = -kin.omega*kin.omega*kin.z_m*sin(kin.omega*time.t + kin.z_shift);
-%   
-%      kin.f = kin.f_m*sin(kin.omega*time.t + kin.f_shift) + kin.f_DC;
-%      kin.fp = kin.omega*kin.f_m*cos(kin.omega*time.t + kin.f_shift);
-%      kin.fpp = -kin.omega*kin.omega*kin.f_m*sin(kin.omega*time.t + kin.f_shift);
-%     
-%      kin.th = kin.th_m*sin(kin.omega*time.t + kin.th_shift) + kin.th_DC;
-%      kin.thp = kin.omega*kin.th_m*cos(kin.omega*time.t + kin.th_shift);
-%      kin.thpp = -kin.omega*kin.omega*kin.th_m*sin(kin.omega*time.t + kin.th_shift);
-%     
-    %% 
+    kin.th = kin.th_m*sin(kin.omega*time.t + kin.th_shift) + kin.th_DC;
+    kin.thp = kin.omega*kin.th_m*cos(kin.omega*time.t + kin.th_shift);
+    kin.thpp = -kin.omega*kin.omega*kin.th_m*sin(kin.omega*time.t + kin.th_shift);
     
     %% Define wing geometry:
     
@@ -243,18 +160,8 @@ if connectivity.error == 0
         interp.hx_map(:,2:aero.N_h+1) = repmat(1:aero.N_h,gauss.N_gauss,1).*sin(repmat(1:aero.N_h,gauss.N_gauss,1).*repmat(gauss.theta,1,aero.N_h))./sin(repmat(gauss.theta,1,aero.N_h));
         interp.hx_map = kron(diag(1./gauss.b),interp.hx_map);
         
-        %% interpolate between data points to match time dimension and take the real part
-        kin.z = real(resample(kin.z, length(time.t), length(kin.z)));
-        kin.zp = real(resample(kin.zp, length(time.t), length(kin.zp)));
-        kin.zpp = real(resample(kin.zpp, length(time.t), length(kin.zpp)));
-        kin.f = real(resample(kin.f, length(time.t), length(kin.f)));
-        kin.fp = real(resample(kin.fp, length(time.t), length(kin.fp)));
-        kin.fpp = real(resample(kin.fpp, length(time.t), length(kin.fpp)));
-        kin.th = real(resample(kin.th, length(time.t), length(kin.th)));
-        kin.thp = real(resample(kin.thp, length(time.t), length(kin.thp)));
-        kin.thpp = real(resample(kin.thpp, length(time.t), length(kin.thpp)));
-         
         %% Aero loading terms:
+        
         aero.uo = repmat(setup.U.*cos(kin.th),1,gauss.N_stations) - (repmat(gauss.y,time.N_steps+1,1) + wing.y_offset).*repmat(kin.thp.*sin(kin.f),1,gauss.N_stations) + repmat(kin.zp.*sin(kin.th),1,gauss.N_stations);
         aero.vo = -repmat(gauss.y,time.N_steps+1,1).*repmat(kin.fp,1,gauss.N_stations) + repmat((setup.U.*sin(kin.f+kin.th))/2 - kin.fp*wing.y_offset - (kin.zp.*cos(kin.f+kin.th))/2  - (kin.zp.*cos(kin.f-kin.th))/2 - (setup.U.*sin(kin.f-kin.th))/2,1,gauss.N_stations) + repmat(kin.thp.*cos(kin.f),1,gauss.N_stations).*(wing.x_offset + repmat(gauss.LE+gauss.b,time.N_steps+1,1));
         aero.v1 = repmat(gauss.b,time.N_steps+1,1).*repmat(kin.thp.*cos(kin.f),1,gauss.N_stations);
@@ -409,6 +316,7 @@ if connectivity.error == 0
         FEA.M_eff = FEA.Mr - 2*setup.rho*interp.F_dP*interp.dP_convert*loads.correct_total*interp.P_map*aero.W*interp.T_hn_h*interp.u_convert;
         
         %% Time marching:
+        
         if plot_decide
             figure
             set(gcf,'position',[98 160 1324 938])
@@ -555,7 +463,7 @@ if connectivity.error == 0
                     foo = reshape(gauss.x+reshape(repmat(gauss.b,gauss.N_gauss,1),1,gauss.N_gauss*gauss.N_stations)'+reshape(repmat(gauss.LE,gauss.N_gauss,1),1,gauss.N_gauss*gauss.N_stations)',gauss.N_gauss,gauss.N_stations);
                     hold on
                     for j = 1:gauss.N_stations
-                        plot3(foo(1:end-2,j),repmat(gauss.y(j),gauss.N_gauss-2,1),gauss.dP(1:end-2,j)/(.5*setup.rho*setup.U(j)*setup.U(j))/200,'k-','linewidth',1.5)
+                        plot3(foo(1:end-2,j),repmat(gauss.y(j),gauss.N_gauss-2,1),gauss.dP(1:end-2,j)/(.5*setup.rho*setup.U(i)*setup.U(i))/200,'k-','linewidth',1.5)
                     end
                     clear temp
                     axis equal, axis tight
@@ -572,9 +480,9 @@ if connectivity.error == 0
                     
                     
                     foo = kin.T*[FEA.x'+wing.x_offset;FEA.y'+wing.y_offset;FEA.z'];
-                    wing.Xo = foo(1,:)'; wing.Yo = foo(2,:)'; wing.Zo = foo(3,:)' + kin.z(j);
+                    wing.Xo = foo(1,:)'; wing.Yo = foo(2,:)'; wing.Zo = foo(3,:)' + kin.z(i);
                     foo = kin.T*[FEA.x'+FEA.answer(:,1)'+wing.x_offset;FEA.y'+FEA.answer(:,2)'+wing.y_offset;FEA.z'+FEA.answer(:,3)'];
-                    wing.X = foo(1,:)'; wing.Y = foo(2,:)'; wing.Z = foo(3,:)' + kin.z(j);
+                    wing.X = foo(1,:)'; wing.Y = foo(2,:)'; wing.Z = foo(3,:)' + kin.z(i);
                     subplot(2,2,3),trisurf(FEA.trielements,wing.Xo,wing.Yo,wing.Zo,FEA.answer(:,3),'edgecolor','none','facecolor',[.5 .5 .5],'facealpha',0.5)
                     hold on
                     trisurf(FEA.trielements,wing.X,wing.Y,wing.Z,FEA.answer(:,3),'edgecolor','none','facecolor','interp')
@@ -588,7 +496,7 @@ if connectivity.error == 0
                     set(clb,'position',[0.0219    0.1321    0.0102    0.2772])
                     
                     
-                    subplot(10,10,60),plot(time.t(1:j)*kin.omega/2/pi,loads.CL(1:j),'k-')
+                    subplot(10,10,60),plot(time.t(1:i)*kin.omega/2/pi,loads.CL(1:i),'k-')
                     xlabel t/T
                     ylabel C_L
                     set(gca,'position',[0.4108    0.3291    0.2134    0.1577])
@@ -619,6 +527,7 @@ if connectivity.error == 0
                     if i < length(time.t)
                         clf
                     end
+                    
                 end
             end
             
@@ -645,4 +554,3 @@ else
     
 end
 
-%disp(g);

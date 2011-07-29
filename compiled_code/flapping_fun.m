@@ -8,7 +8,6 @@
 % @D number of Fourier series coefficients used to approximate kinematics 
 %   of plunging, flapping, and pitching motion, each of the form:
 %   a_n*exp(sqrt(-1)*omega*n*t), n = -N ... N
-% @time_skip set the number of plots to skip if plot_decide_string=1
 % @return vector g (drag, power, and lift coefficients)
 
 function[g] = flapping_fun(x_filename, plot_decide_string, D, time_skip)
@@ -645,4 +644,4 @@ else
     
 end
 
-%disp(g);
+disp(g);
