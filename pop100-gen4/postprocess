@@ -1,0 +1,5 @@
+#!/bin/csh -f 
+# extract function values from workdirs and write to one file
+grep 'Best objective functions' log -A 3 > best_function
+grep -v 'Best' best_function > best_vals
+grep -e '\b[.0-9]*\b' best_vals | cut -c -39 > best_num.dat
